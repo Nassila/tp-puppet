@@ -26,14 +26,14 @@ exec { 'extract-dokuwiki':
   command => 'tar xavf dokuwiki.tgz',
   cwd     => '/usr/src',
   path    => ['/usr/bin'],
-  require => file['download-dokuwiki']
+  require => File['download-dokuwiki']
 }
 
 file { 'rename-dokuwiki-2020-07-29':
   ensure => present,
   source => '/usr/src/dokuwiki-2020-07-29',
   path   => '/usr/src/dokuwiki',
-  notify => file['extract-dokuwiki']
+  notify => File['extract-dokuwiki']
 }
 
 #etape 5 création des VM
@@ -46,7 +46,7 @@ file { 'create new directory for recettes.wiki in /var/www and allow apache to w
   recurse => true,
   owner   => 'www-data',
   group   => 'www-data',
-  before  => file['Copy-dokuwiki-directory-contents-in-recettes-wiki']
+  before  => File['Copy-dokuwiki-directory-contents-in-recettes-wiki']
 }
 
 file { 'create new directory for politique.wiki in /var/www and allow apache to write in':
@@ -55,7 +55,7 @@ file { 'create new directory for politique.wiki in /var/www and allow apache to 
   recurse => true,
   owner   => 'www-data',
   group   => 'www-data',
-  before  => file['Copy-dokuwiki-directory-contents-in-politique-wiki']
+  before  => File['Copy-dokuwiki-directory-contents-in-politique-wiki']
 }
 
 ## Installer dokuwiki dans le site XXX

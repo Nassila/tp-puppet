@@ -41,20 +41,20 @@ class dokuwiki {
 
 ##  Créer un dossier pour les données du site XXX
 
-class dokuwiki_deploy {
-    $source_path = '/usr/src'
-    $web_path = '/var/www'    
-
-    file { "create new directory for ${env}.wiki in ${web_path} and allow apache to write in":            
-            ensure  => directory,
-            source  => "${source_path}/dokuwiki",
-            path    => "${web_path}/${env}.wiki",
-            recurse => true,
-            owner   => 'www-data',
-            group   => 'www-data',
-            require => File['rename-dokuwiki-2020-07-29']
-    }
-}
+#class dokuwiki_deploy {
+#   $source_path = '/usr/src'
+#    $web_path = '/var/www'    
+#
+#    file { "create new directory for ${env}.wiki in ${web_path} and allow apache to write in":            
+#            ensure  => directory,
+#            source  => "${source_path}/dokuwiki",
+#            path    => "${web_path}/${env}.wiki",
+#            recurse => true,
+#            owner   => 'www-data',
+#            group   => 'www-data',
+#            require => File['rename-dokuwiki-2020-07-29']
+#    }
+#}
 $source_path = '/usr/src'
 $web_path = '/var/www'
 

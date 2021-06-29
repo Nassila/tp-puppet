@@ -1,11 +1,9 @@
 class dokuwiki {
-    package {
-        'apache2':
+    package { 'apache2':
             ensure => present
     }
 
-    package {
-        'php7.3':
+    package { 'php7.3':
             ensure => present
     }
 

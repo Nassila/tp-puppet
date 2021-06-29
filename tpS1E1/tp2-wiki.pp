@@ -41,22 +41,11 @@ class dokuwiki {
 
 ##  Créer un dossier pour les données du site XXX
 
-class dokuwikirecettes {
-    file { 'create new directory for recettes.wiki in /var/www and allow apache to write in':
+class dokuwiki_deploy {
+    file { "create new directory for ${env}.wiki in ${path3} and allow apache to write in":            
             ensure  => directory,
             source  => "${path1}/dokuwiki",
-            path    => "${path3}/recettes.wiki",
-            recurse => true,
-            owner   => 'www-data',
-            group   => 'www-data',
-            require => File['rename-dokuwiki-2020-07-29']
-    }
-}
-
-class dokuwikipolitique {
-    file { 'create new directory for politique.wiki in /var/www and allow apache to write in':            ensure  => directory,
-            source  => "${path1}/dokuwiki",
-            path    => "${path3}/politique.wiki",
+            path    => "${path3}/${env}.wiki",
             recurse => true,
             owner   => 'www-data',
             group   => 'www-data',
@@ -65,11 +54,13 @@ class dokuwikipolitique {
 }
 
 node 'server0' {
+    $env = 'recettes'
     include dokuwiki
-    include dokuwikirecettes
+    include dokuwiki_deploy
 }
 
 node 'server1' {
+    $env = 'politique'
     include dokuwiki
-    include dokuwikipolitique
+    include dokuwiki_deploy
 }

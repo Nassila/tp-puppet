@@ -30,10 +30,10 @@ exec { 'extract-dokuwiki':
 }
 
 file { 'rename-dokuwiki-2020-07-29':
-  ensure => present,
-  source => '/usr/src/dokuwiki-2020-07-29',
-  path   => '/usr/src/dokuwiki',
-  notify => File['extract-dokuwiki']
+  ensure  => present,
+  source  => '/usr/src/dokuwiki-2020-07-29',
+  path    => '/usr/src/dokuwiki',
+  require => Exec['extract-dokuwiki']
 }
 
 #etape 5 création des VM
@@ -42,34 +42,23 @@ file { 'rename-dokuwiki-2020-07-29':
 
 file { 'create new directory for recettes.wiki in /var/www and allow apache to write in':
   ensure  => directory,
+  source  => '/usr/src/dokuwiki',
   path    => '/var/www/recettes.wiki',
   recurse => true,
   owner   => 'www-data',
   group   => 'www-data',
-  before  => File['Copy-dokuwiki-directory-contents-in-recettes-wiki']
+  require => File['rename-dokuwiki-2020-07-29']
 }
 
 file { 'create new directory for politique.wiki in /var/www and allow apache to write in':
   ensure  => directory,
+  source  => '/usr/src/dokuwiki',
   path    => '/var/www/politique.wiki',
   recurse => true,
   owner   => 'www-data',
   group   => 'www-data',
-  before  => File['Copy-dokuwiki-directory-contents-in-politique-wiki']
+  require => File['rename-dokuwiki-2020-07-29']
 }
 
-## Installer dokuwiki dans le site XXX
-
-file { 'Copy-dokuwiki-directory-contents-in-recettes-wiki':
-  ensure => present,
-  source => '/usr/src/dokuwiki',
-  path   => '/var/www/recettes.wiki'
-}
-
-file { 'Copy-dokuwiki-directory-contents-in-politique-wiki':
-  ensure => present,
-  source => '/usr/src/dokuwiki',
-  path   => '/var/www/politique.wiki'
-}
 
 ##  Créer un fichier de configuration pour XXX

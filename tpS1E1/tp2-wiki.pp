@@ -55,15 +55,40 @@ class dokuwiki_deploy {
             require => File['rename-dokuwiki-2020-07-29']
     }
 }
+$source_path = '/usr/src'
+$web_path = '/var/www'
+
+define deploy_dokuwiki ($env="") {
+    file { "$env":
+            ensure  => directory,
+            source  => "${source_path}/dokuwiki",
+            path    => "${web_path}/${env}",
+            recurse => true,
+            owner   => 'www-data',
+            group   => 'www-data',
+            require => File['rename-dokuwiki-2020-07-29']
+    }
+}
 
 node 'server0' {
-    $env = 'recettes'
+    #$env = 'recettes'
     include dokuwiki
-    include dokuwiki_deploy
+    #include dokuwiki_deploy
+    
+    deploy_dokuwiki { "recettes.wiki":
+        env => "recettes.wiki",
+    }
+
+    deploy_dokuwiki { "tajineworld.com":
+        env => "tajineworld.com",
+    }
 }
 
 node 'server1' {
-    $env = 'politique'
+    #$env = 'politique'
     include dokuwiki
-    include dokuwiki_deploy
+    #include dokuwiki_deploy
+    deploy_dokuwiki { "politique.wiki":
+        env => "politique.wiki",
+    }
 }

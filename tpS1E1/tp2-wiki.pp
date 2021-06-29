@@ -32,7 +32,7 @@ class dokuwiki {
     file { 'rename-dokuwiki-2020-07-29':
             ensure  => present,
             source  => "${path1}/dokuwiki-2020-07-29",
-            path    => "/{path1}/dokuwiki",
+            path    => "${path1}/dokuwiki",
             require => Exec['extract-dokuwiki']
     }
 }

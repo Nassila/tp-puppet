@@ -33,7 +33,7 @@ file { 'rename-dokuwiki-2020-07-29':
   ensure => present,
   source => '/usr/src/dokuwiki-2020-07-29',
   path   => '/usr/src/dokuwiki',
-  notify  => file['extract-dokuwiki']
+  notify => file['extract-dokuwiki']
 }
 
 #etape 5 création des VM

@@ -37,7 +37,7 @@ class dokuwiki {
 
 ##  Créer un dossier pour les données du site XXX
 
-class dokuwiki-recettes {
+class dokuwikirecettes {
     file { 'create new directory for recettes.wiki in /var/www and allow apache to write in':
             ensure  => directory,
             source  => '/usr/src/dokuwiki',
@@ -49,7 +49,7 @@ class dokuwiki-recettes {
     }
 }
 
-class dokuwiki-politique {
+class dokuwikipolitique {
     file { 'create new directory for politique.wiki in /var/www and allow apache to write in':            ensure  => directory,
             source  => '/usr/src/dokuwiki',
             path    => '/var/www/politique.wiki',
@@ -62,10 +62,10 @@ class dokuwiki-politique {
 
 node 'server0' {
     include dokuwiki
-    include dokuwiki-recettes
+    include dokuwikirecettes
 }
 
 node 'server1' {
     include dokuwiki
-    include dokuwiki-politique
+    include dokuwikipolitique
 }

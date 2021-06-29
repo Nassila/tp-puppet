@@ -1,4 +1,4 @@
-#etape 2: installation de apache2 et php
+#Etape 2: installation de apache2 et php
 
 package { 'apache2':
   ensure   => present,

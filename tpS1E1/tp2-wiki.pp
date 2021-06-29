@@ -31,11 +31,13 @@ class dokuwiki {
             path    => '/usr/src/dokuwiki',
             require => Exec['extract-dokuwiki']
     }
+}
 
-#etape 5 création des VM
+    #etape 5 création des VM
 
 ##  Créer un dossier pour les données du site XXX
 
+class dokuwiki-recettes {
     file { 'create new directory for recettes.wiki in /var/www and allow apache to write in':
             ensure  => directory,
             source  => '/usr/src/dokuwiki',
@@ -45,9 +47,10 @@ class dokuwiki {
             group   => 'www-data',
             require => File['rename-dokuwiki-2020-07-29']
     }
+}
 
-    file { 'create new directory for politique.wiki in /var/www and allow apache to write in':
-            ensure  => directory,
+class dokuwiki-politique {
+    file { 'create new directory for politique.wiki in /var/www and allow apache to write in':            ensure  => directory,
             source  => '/usr/src/dokuwiki',
             path    => '/var/www/politique.wiki',
             recurse => true,
@@ -59,5 +62,10 @@ class dokuwiki {
 
 node 'server0' {
     include dokuwiki
+    include dokuwiki-recettes
 }
 
+node 'server1' {
+    include dokuwiki
+    include dokuwiki-politique
+}

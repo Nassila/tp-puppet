@@ -57,7 +57,7 @@ class dokuwiki {
     }
 }
 
-node server0 {
+node 'server0' {
     include dokuwiki
 }
 

@@ -41,32 +41,32 @@ file { 'rename-dokuwiki-2020-07-29':
 ##  Créer un dossier pour les données du site XXX
 
 file { 'create new directory for recettes.wiki in /var/www and allow apache to write in':
-  ensure => directory,
-  path   => '/var/www/recettes.wiki',
+  ensure  => directory,
+  path    => '/var/www/recettes.wiki',
   recurse => true,
   owner   => 'www-data',
   group   => 'www-data',
-  notify  => file['Copy dokuwiki directory contents in recettes.wiki']
+  notify  => file['Copy-dokuwiki-directory-contents-in-recettes-wiki']
 }
 
 file { 'create new directory for politique.wiki in /var/www and allow apache to write in':
-  ensure => directory,
-  path   => '/var/www/politique.wiki',
+  ensure  => directory,
+  path    => '/var/www/politique.wiki',
   recurse => true,
   owner   => 'www-data',
   group   => 'www-data',
-  notify  => file['Copy dokuwiki directory contents in politique.wiki']
+  notify  => file['Copy-dokuwiki-directory-contents-in-politique-wiki']
 }
 
 ## Installer dokuwiki dans le site XXX
 
-file { 'Copy dokuwiki directory contents in recettes.wiki':
+file { 'Copy-dokuwiki-directory-contents-in-recettes-wiki':
   ensure => present,
   source => '/usr/src/dokuwiki',
   path   => '/var/www/recettes.wiki'
 }
 
-file { 'Copy dokuwiki directory contents in politique.wiki':
+file { 'Copy-dokuwiki-directory-contents-in-politique-wiki':
   ensure => present,
   source => '/usr/src/dokuwiki',
   path   => '/var/www/politique.wiki'

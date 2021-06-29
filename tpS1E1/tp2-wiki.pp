@@ -1,3 +1,7 @@
+$path1 = '/usr/src'
+$path2 = '/usr/bin'
+$path3 = '/var/www'
+
 class dokuwiki {
     package { 'apache2':
             ensure => present
@@ -12,23 +16,23 @@ class dokuwiki {
     file { 'download-dokuwiki':
             ensure => present,
             source => 'https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz',
-            path   => '/usr/src/dokuwiki.tgz'
+            path   => "${path1}/dokuwiki.tgz"
     }
 
 #etape 4 extraire l'archive dokuwiki.tgz
 
     exec { 'extract-dokuwiki':
             command => 'tar xavf dokuwiki.tgz',
-            cwd     => '/usr/src',
-            path    => ['/usr/bin'],
+            cwd     => "${path1}",
+            path    => ["${path2}"],
             require => File['download-dokuwiki'],
-            unless  => 'test -d /usr/src/dokuwiki-2020-07-29'
+            unless  => "test -d ${path1}/dokuwiki-2020-07-29"
     }
 
     file { 'rename-dokuwiki-2020-07-29':
             ensure  => present,
-            source  => '/usr/src/dokuwiki-2020-07-29',
-            path    => '/usr/src/dokuwiki',
+            source  => "${path1}/dokuwiki-2020-07-29",
+            path    => "/{path1}/dokuwiki",
             require => Exec['extract-dokuwiki']
     }
 }
@@ -40,8 +44,8 @@ class dokuwiki {
 class dokuwikirecettes {
     file { 'create new directory for recettes.wiki in /var/www and allow apache to write in':
             ensure  => directory,
-            source  => '/usr/src/dokuwiki',
-            path    => '/var/www/recettes.wiki',
+            source  => "${path1}/dokuwiki",
+            path    => "${path3}/recettes.wiki",
             recurse => true,
             owner   => 'www-data',
             group   => 'www-data',
@@ -51,8 +55,8 @@ class dokuwikirecettes {
 
 class dokuwikipolitique {
     file { 'create new directory for politique.wiki in /var/www and allow apache to write in':            ensure  => directory,
-            source  => '/usr/src/dokuwiki',
-            path    => '/var/www/politique.wiki',
+            source  => "${path1}/dokuwiki",
+            path    => "${path3}/politique.wiki",
             recurse => true,
             owner   => 'www-data',
             group   => 'www-data',
